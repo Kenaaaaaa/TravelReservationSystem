@@ -1,0 +1,28 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@model TravelReservationSystem.Models.Trip
+
+@{
+    ViewData["Title"] = "Detajet e Udhëtimit";
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
+}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.Destination</h4>
+        <p class="card-text"><strong>Përshkrimi:</strong> @Model.Description</p>
+        <p class="card-text"><strong>Çmimi:</strong> @Model.Price €</p>
+        <p class="card-text"><strong>Kohëzgjatja:</strong> @Model.DurationDays ditë</p>
+        <p class="card-text"><strong>Data Nisjes:</strong> @Model.StartDate.ToShortDateString()</p>
+        <p class="card-text"><strong>Numri Maksimal i Personave:</strong> @Model.MaxPeople</p>
+        <p class="card-text"><strong>Foto:</strong> <br />
+            <img src="@Model.ImageUrl" alt="Foto e udhëtimit" style="max-width: 400px;" />
+        </p>
+    </div>
+</div>
+<div class="mt-4">
+    @if (role == "Admin")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Ndrysho</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Kthehu te lista</a>
+</div>

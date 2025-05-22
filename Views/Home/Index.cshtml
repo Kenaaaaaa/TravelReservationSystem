@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Brikena Travel Agency";
+}
+
+<!-- Carousel full screen -->
+<div id="destinationCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active position-relative">
+            <img src="~/images/thailand.jpg" class="d-block w-100 vh-100 object-fit-cover" alt="Thailand">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-25 text-center">
+                <h1 class="display-3 fw-bold text-white">Brikena Travel Agency</h1>
+                <p class="lead text-light mb-4">Eksploro Tajlandën – tempuj, natyrë, aventura</p>
+                <div class="d-flex gap-3">
+                    <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-light fw-bold px-5">Krijo Llogari</a>
+                    <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item position-relative">
+            <img src="~/images/borabora.jpeg" class="d-block w-100 vh-100 object-fit-cover" alt="Bora Bora">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-25 text-center">
+                <h1 class="display-3 fw-bold text-white">Bora Bora</h1>
+                <p class="lead text-light mb-4">Pushime luksoze mbi detin kristal</p>
+                <div class="d-flex gap-3">
+                    <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-light fw-bold px-5">Krijo Llogari</a>
+                    <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item position-relative">
+            <img src="~/images/santorini.jpeg" class="d-block w-100 vh-100 object-fit-cover" alt="Santorini">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-25 text-center">
+                <h1 class="display-3 fw-bold text-white">Santorini</h1>
+                <p class="lead text-light mb-4">Perëndime të paharrueshme në Egje</p>
+                <div class="d-flex gap-3">
+                    <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-light fw-bold px-5">Krijo Llogari</a>
+                    <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel buttons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#destinationCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Para</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#destinationCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Pas</span>
+    </button>
+</div>

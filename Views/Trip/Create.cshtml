@@ -1,0 +1,67 @@
+@model TravelReservationSystem.Models.Trip
+
+@{
+    ViewData["Title"] = "Shto Udhëtim të Ri";
+}
+
+<h2 class="text-center mb-4">Shto Udhëtim të Ri</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["Success"]
+    </div>
+}
+
+<form asp-action="Create" method="post" class="w-75 mx-auto">
+    <div class="form-group mb-3">
+        <label asp-for="Destination" class="form-label"></label>
+        <input asp-for="Destination" class="form-control" />
+        <span asp-validation-for="Destination" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="DurationDays" class="form-label"></label>
+        <input asp-for="DurationDays" class="form-control" />
+        <span asp-validation-for="DurationDays" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="StartDate" class="form-label"></label>
+        <input asp-for="StartDate" type="date" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="ImageUrl" class="form-label"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-4">
+        <label asp-for="MaxPeople" class="form-label"></label>
+        <input asp-for="MaxPeople" class="form-control" />
+        <span asp-validation-for="MaxPeople" class="text-danger"></span>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-success">Ruaj</button>
+        <a asp-action="Index" class="btn btn-secondary">Anulo</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

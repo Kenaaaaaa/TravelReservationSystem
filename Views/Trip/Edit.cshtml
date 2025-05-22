@@ -1,0 +1,56 @@
+@model TravelReservationSystem.Models.Trip
+
+@{
+    ViewData["Title"] = "Ndrysho Udhëtimin";
+}
+
+<h2>Ndrysho Udhëtimin</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Destination"></label>
+        <input asp-for="Destination" class="form-control" />
+        <span asp-validation-for="Destination" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DurationDays"></label>
+        <input asp-for="DurationDays" class="form-control" />
+        <span asp-validation-for="DurationDays" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartDate"></label>
+        <input asp-for="StartDate" type="date" class="form-control" />
+        <span asp-validation-for="StartDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ImageUrl"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="MaxPeople"></label>
+        <input asp-for="MaxPeople" class="form-control" />
+        <span asp-validation-for="MaxPeople" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Ruaj Ndryshimet</button>
+    <a asp-action="Index" class="btn btn-secondary">Anulo</a>
+</form>

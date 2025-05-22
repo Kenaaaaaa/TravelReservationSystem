@@ -1,0 +1,88 @@
+@model TravelReservationSystem.Models.User
+@{
+    ViewData["Title"] = "Regjistrim";
+}
+
+<style>
+    body {
+        background: linear-gradient(to right, #e0f7fa, #fff);
+        animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .register-card {
+        animation: slideUp 0.6s ease;
+        border-radius: 15px;
+    }
+
+keyframes slideUp {        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    keyframes fadeIn {        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, .25);
+        border-color: #007bff;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg register-card">
+                <div class="card-header text-white bg-success text-center">
+                    <h3 class="fw-bold mb-0">Regjistrohu</h3>
+                </div>
+
+                <div class="card-body p-4 bg-light">
+                    @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <div class="alert alert-danger">@err.ErrorMessage</div>
+                    }
+
+                    <form asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label">Emri i Plotë</label>
+                            <input asp-for="FullName" class="form-control" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <small class="text-muted">Shënim: Nëse email-i përmban "admin", do të regjistrohesh si administrator.</small>
+                        </div>
+
+
+                        <div class="mb-4">
+                            <label asp-for="PasswordHash" class="form-label">Fjalëkalimi</label>
+                            <input asp-for="PasswordHash" type="password" class="form-control" />
+                            <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success px-4">Regjistrohu</button>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary px-4">Anulo</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center bg-white">
+                    <a asp-action="Login" class="text-decoration-none fw-semibold">Ke tashmë një llogari? Hyr këtu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

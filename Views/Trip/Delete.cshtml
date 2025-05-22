@@ -1,0 +1,23 @@
+@model TravelReservationSystem.Models.Trip
+
+@{
+    ViewData["Title"] = "Fshi Udhëtimin";
+}
+
+<h2>Fshi Udhëtimin</h2>
+
+<h4>A je e sigurt që do ta fshish këtë udhëtim?</h4>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <p><strong>Destinacioni:</strong> @Model.Destination</p>
+        <p><strong>Çmimi:</strong> @Model.Price €</p>
+        <p><strong>Data Nisjes:</strong> @Model.StartDate.ToShortDateString()</p>
+    </div>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger mt-3">Po, fshije</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Anulo</a>
+</form>

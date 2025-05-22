@@ -1,0 +1,50 @@
+@model List<TravelReservationSystem.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Rezervimet e Mia";
+}
+
+<h2 class="text-center mb-4">Rezervimet e Mia</h2>
+
+@if (Model == null || Model.Count == 0)
+{
+    <div class="alert alert-info text-center">Nuk keni asnjë rezervim të regjistruar.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Destinacioni</th>
+            <th>Përshkrimi</th>
+            <th>Çmimi (€)</th>
+            <th>Kohëzgjatja (ditë)</th>
+            <th>Data e Nisjes</th>
+            <th>Maks. Persona</th>
+            <th>Data e Rezervimit</th>
+            <th>Statusi</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Trip?.Destination</td>
+                <td>@r.Trip?.Description</td>
+                <td>@(r.Trip != null ? r.Trip.Price.ToString("F2") : "-")</td>
+                <td>@r.Trip?.DurationDays</td>
+                <td>@(r.Trip?.StartDate.ToShortDateString() ?? "-")</td>
+                <td>@r.Trip?.MaxPeople</td>
+                <td>@r.ReservationDate.ToShortDateString()</td>
+                <td>@r.Status</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center mt-4">
+        <a asp-controller="Trip" asp-action="Index" class="btn btn-outline-primary shadow-sm fw-semibold">
+            ← Kthehu te Lista e Udhëtimeve
+        </a>
+    </div>
+
+}
