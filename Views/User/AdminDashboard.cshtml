@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Paneli Admin";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Paneli i Administratorit</h2>
+
+    <div class="row g-4">
+        <!-- Menaxho Udhëtimet -->
+        <div class="col-md-4">
+            <div class="card border-primary shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">📋 Lista e Udhëtimeve</h5>
+                    <p class="card-text">Shiko, shto ose modifiko udhëtime ekzistuese.</p>
+                    <a asp-controller="Trip" asp-action="Index" class="btn btn-outline-primary">Menaxho Udhëtimet</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shto Udhëtim -->
+        <div class="col-md-4">
+            <div class="card border-success shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">➕ Shto Udhëtim</h5>
+                    <p class="card-text">Krijo një udhëtim të ri për përdoruesit.</p>
+                    <a asp-controller="Trip" asp-action="Create" class="btn btn-outline-success">Krijo Udhëtim</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menaxho Rezervimet -->
+        <div class="col-md-4">
+            <div class="card border-warning shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h5 class="card-title">🕓 Rezervimet në Pritje</h5>
+                    <p class="card-text">Shiko dhe aprovo ose refuzo rezervimet në pritje.</p>
+                    <a asp-controller="User" asp-action="AdminDashboard" class="btn btn-outline-warning">Menaxho Rezervimet</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
