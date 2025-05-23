@@ -102,10 +102,38 @@ namespace TravelReservationSystem.Controllers
         public IActionResult AdminDashboard()
         {
             var role = HttpContext.Session.GetString("Role");
-            if (role != "Admin")
+            if (string.IsNullOrEmpty(role) || role.ToLower() != "admin")
                 return RedirectToAction("Login");
 
             return View();
+        }
+        // GET: User/ManageReservations
+        public async Task<IActionResult> ManageReservations()
+        {
+            if (HttpContext.Session.GetString("Role") != "Admin")
+                return RedirectToAction("Login");
+
+            var pendingReservations = await _context.Reservations
+                .Include(r => r.Trip)
+                .Include(r => r.User)
+                .Where(r => r.Status == "Pending")
+                .ToListAsync();
+
+            return View(pendingReservations);
+        }
+
+// POST: User/UpdateReservationStatus
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateReservationStatus(int id, string status)
+        {
+            var reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null) return NotFound();
+
+            reservation.Status = status;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ManageReservations");
         }
     }
 }
