@@ -4,7 +4,38 @@
     ViewData["Title"] = "Rezervimet në Pritje";
 }
 
-<h2 class="text-center mb-4">🕓 Rezervimet në Pritje</h2>
+<style>
+    body {
+        background-color: #000;
+        color: white;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    #fireworks-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .table {
+        background-color: #fff;
+        color: #000;
+    }
+
+    .btn-sm:hover {
+        transform: scale(1.05);
+        transition: transform 0.2s ease;
+    }
+</style>
+
+<canvas id="fireworks-canvas"></canvas>
+
+<h2 class="text-center mb-4">🎆 Rezervimet në Pritje</h2>
 
 @if (TempData["Success"] != null)
 {
@@ -53,4 +84,66 @@ else
             }
         </tbody>
     </table>
+}
+
+@section Scripts {
+    <script>
+        const canvas = document.getElementById("fireworks-canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const fireworks = [];
+
+        function Firework() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height / 2;
+            this.radius = Math.random() * 2 + 1;
+            this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+            this.speedX = Math.random() * 4 - 2;
+            this.speedY = Math.random() * 4 - 2;
+            this.alpha = 1;
+            this.decay = Math.random() * 0.01 + 0.005;
+
+            this.update = function () {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.alpha -= this.decay;
+            };
+
+            this.draw = function () {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            };
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (Math.random() < 0.1) {
+                for (let i = 0; i < 20; i++) {
+                    fireworks.push(new Firework());
+                }
+            }
+
+            for (let i = 0; i < fireworks.length; i++) {
+                fireworks[i].update();
+                fireworks[i].draw();
+                if (fireworks[i].alpha <= 0) {
+                    fireworks.splice(i, 1);
+                    i--;
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
 }
