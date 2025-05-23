@@ -1,0 +1,49 @@
+@model IEnumerable<TravelReservationSystem.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Rezervimet në Pritje";
+}
+
+<h2 class="mb-4">Rezervimet në Pritje</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Nuk ka rezervime në pritje.</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Përdoruesi</th>
+            <th>Destinacioni</th>
+            <th>Data e Rezervimit</th>
+            <th>Statusi</th>
+            <th>Veprime</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var res in Model)
+        {
+            <tr>
+                <td>@res.User.FullName</td>
+                <td>@res.Trip.Destination</td>
+                <td>@res.ReservationDate.ToShortDateString()</td>
+                <td>@res.Status</td>
+                <td>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@res.Id" />
+                        <input type="hidden" name="status" value="Accepted" />
+                        <button type="submit" class="btn btn-success btn-sm">✅ Prano</button>
+                    </form>
+                    <form asp-action="UpdateStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@res.Id" />
+                        <input type="hidden" name="status" value="Rejected" />
+                        <button type="submit" class="btn btn-danger btn-sm">❌ Refuzo</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
