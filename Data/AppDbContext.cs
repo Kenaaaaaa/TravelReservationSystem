@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TravelReservationSystem.Models;
-
-namespace TravelReservationSystem.Data
+using TravelReservationSystem.Helpers;namespace TravelReservationSystem.Data
 {
     public class AppDbContext : DbContext
     {

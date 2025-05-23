@@ -1,8 +1,13 @@
 ﻿@inject IHttpContextAccessor HttpContextAccessor
+@inject TravelReservationSystem.Data.AppDbContext Db
+@using TravelReservationSystem.Helpers
+
 @{
     var fullName = HttpContextAccessor.HttpContext?.Session.GetString("FullName");
-    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role");
+    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")?.ToLower();
+    var pendingCount = (role == "admin") ? AdminHelper.GetPendingReservationCount(Db) : 0;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +22,6 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom shadow-sm">
             <div class="container-fluid">
-                <!-- Logo -->
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/logo.png" alt="Logo" style="height: 40px;" class="me-2" />
                 </a>
@@ -29,7 +33,6 @@
                 </button>
 
                 <div class="collapse navbar-collapse">
-                    <!-- Majtas -->
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
@@ -39,21 +42,29 @@
                         </li>
                     </ul>
 
-                    <!-- Djathtas -->
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         @if (!string.IsNullOrEmpty(fullName))
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-success">Mirsevjen, @fullName!</span>
+                                <span class="nav-link text-success fw-semibold">Mirsevjen, @fullName!</span>
                             </li>
 
-                            @if (role == "Admin")
+                            @if (role == "admin")
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-controller="User" asp-action="AdminDashboard">Paneli Admin</a>
+                                <li class="nav-item position-relative">
+                                    <a class="nav-link text-dark position-relative" asp-controller="User" asp-action="AdminDashboard">
+                                        Paneli Admin
+                                        @if (pendingCount > 0)
+                                        {
+                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                @pendingCount
+                                                <span class="visually-hidden">rezervime në pritje</span>
+                                            </span>
+                                        }
+                                    </a>
                                 </li>
                             }
-                            else if (role == "User")
+                            else if (role == "user")
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-controller="Reservation" asp-action="MyReservations">Rezervimet e mia</a>
@@ -82,7 +93,7 @@
     <div class="container">
         @if (!string.IsNullOrEmpty(fullName))
         {
-            <div class="alert alert-success text-center">
+            <div class="alert alert-success text-center shadow-sm">
                 Mirsevjen, @fullName!
             </div>
         }
@@ -92,7 +103,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted mt-5">
         <div class="container text-center">
             &copy; 2025 - Brikena Travel - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>

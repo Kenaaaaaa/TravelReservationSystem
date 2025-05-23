@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using TravelReservationSystem.Data;
-using TravelReservationSystem.Models;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Text;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using TravelReservationSystem.Data;
+using TravelReservationSystem.Models;
 
 namespace TravelReservationSystem.Controllers
 {
@@ -19,7 +19,7 @@ namespace TravelReservationSystem.Controllers
             _context = context;
         }
 
-        // GET: User/Register
+        // ✅ GET: User/Register
         public IActionResult Register()
         {
             return View();
@@ -41,9 +41,8 @@ namespace TravelReservationSystem.Controllers
                 return View(user);
             }
 
-            // Vendos rolin në varësi të përmbajtjes së emailit
             user.PasswordHash = HashPassword(user.PasswordHash);
-            user.Role = user.Email.ToLower().Contains("admin") ? "admin" : "user";
+            user.Role = user.Email.ToLower().Contains("admin") ? "Admin" : "User";
             user.CreatedAt = DateTime.Now;
 
             _context.Users.Add(user);
@@ -52,7 +51,7 @@ namespace TravelReservationSystem.Controllers
             return RedirectToAction("Login");
         }
 
-        // GET: User/Login
+        // ✅ GET: User/Login
         public IActionResult Login()
         {
             return View();
@@ -74,15 +73,17 @@ namespace TravelReservationSystem.Controllers
                 return View();
             }
 
-            // Ruaj të dhënat në session
+            // Ruaj në session për përdorim në të gjithë aplikacionin
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("FullName", user.FullName);
-            HttpContext.Session.SetString("Role", user.Role); // e merr nga databaza
+            HttpContext.Session.SetString("Role", user.Role);
 
             TempData["Message"] = "Mirsevjen, " + user.FullName;
+
             return RedirectToAction("Index", "Trip");
         }
 
+        // ✅ Hashim fjalëkalimi
         private string HashPassword(string password)
         {
             using var sha256 = SHA256.Create();
@@ -90,14 +91,18 @@ namespace TravelReservationSystem.Controllers
             return Convert.ToBase64String(bytes);
         }
 
+        // ✅ Dalje nga sistemi
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
         }
+
+        // ✅ Paneli Admin
         public IActionResult AdminDashboard()
         {
-            if (HttpContext.Session.GetString("Role") != "Admin")
+            var role = HttpContext.Session.GetString("Role");
+            if (role != "Admin")
                 return RedirectToAction("Login");
 
             return View();
