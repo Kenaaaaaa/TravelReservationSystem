@@ -4,46 +4,53 @@
     ViewData["Title"] = "Rezervimet në Pritje";
 }
 
-<h2 class="mb-4">Rezervimet në Pritje</h2>
+<h2 class="text-center mb-4">🕓 Rezervimet në Pritje</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center">@TempData["Success"]</div>
+}
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">Nuk ka rezervime në pritje.</div>
+    <div class="alert alert-info text-center">Nuk ka asnjë rezervim në pritje.</div>
 }
 else
 {
-    <table class="table table-bordered">
-        <thead class="table-dark">
-        <tr>
-            <th>Përdoruesi</th>
-            <th>Destinacioni</th>
-            <th>Data e Rezervimit</th>
-            <th>Statusi</th>
-            <th>Veprime</th>
-        </tr>
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="table-dark text-center">
+            <tr>
+                <th>Përdoruesi</th>
+                <th>Udhëtimi</th>
+                <th>Data e Rezervimit</th>
+                <th>Statusi</th>
+                <th>Veprime</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var res in Model)
-        {
-            <tr>
-                <td>@res.User.FullName</td>
-                <td>@res.Trip.Destination</td>
-                <td>@res.ReservationDate.ToShortDateString()</td>
-                <td>@res.Status</td>
-                <td>
-                    <form asp-action="UpdateStatus" method="post" class="d-inline">
-                        <input type="hidden" name="id" value="@res.Id" />
-                        <input type="hidden" name="status" value="Accepted" />
-                        <button type="submit" class="btn btn-success btn-sm">✅ Prano</button>
-                    </form>
-                    <form asp-action="UpdateStatus" method="post" class="d-inline">
-                        <input type="hidden" name="id" value="@res.Id" />
-                        <input type="hidden" name="status" value="Rejected" />
-                        <button type="submit" class="btn btn-danger btn-sm">❌ Refuzo</button>
-                    </form>
-                </td>
-            </tr>
-        }
+            @foreach (var reservation in Model)
+            {
+                <tr class="text-center align-middle">
+                    <td>@reservation.User.FullName</td>
+                    <td>@reservation.Trip.Destination</td>
+                    <td>@reservation.ReservationDate.ToShortDateString()</td>
+                    <td>
+                        <span class="badge bg-warning text-dark">@reservation.Status</span>
+                    </td>
+                    <td>
+                        <form asp-action="UpdateStatus" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@reservation.Id" />
+                            <input type="hidden" name="status" value="Accepted" />
+                            <button type="submit" class="btn btn-success btn-sm">✅ Prano</button>
+                        </form>
+                        <form asp-action="UpdateStatus" method="post" class="d-inline ms-1">
+                            <input type="hidden" name="id" value="@reservation.Id" />
+                            <input type="hidden" name="status" value="Refused" />
+                            <button type="submit" class="btn btn-danger btn-sm">❌ Refuzo</button>
+                        </form>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 }

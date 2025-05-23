@@ -3,79 +3,149 @@
 @model IEnumerable<TravelReservationSystem.Models.Trip>
 
 @{
-    ViewData["Title"] = "Lista e Udhëtimeve";
-    var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")?.ToLower();
+ViewData["Title"] = "Lista e Udhëtimeve";
+var role = HttpContextAccessor.HttpContext?.Session.GetString("Role")?.ToLower();
 }
+
+<style>
+    body {
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #e0f7fa;
+        font-family: 'Segoe UI', sans-serif;
+        background-attachment: fixed;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.8s ease-in;
+    }
+
+keyframes fadeIn {        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .btn-sm {
+        transition: all 0.3s ease;
+        border-radius: 20px;
+        font-weight: bold;
+    }
+
+    .btn-outline-info:hover,
+    .btn-outline-success:hover,
+    .btn-outline-warning:hover,
+    .btn-outline-danger:hover {
+        box-shadow: 0 0 10px #00ffe7;
+        transform: scale(1.05);
+    }
+
+    .table th, .table td {
+        vertical-align: middle !important;
+    }
+
+    .alert-role {
+        animation: slideDown 0.5s ease;
+    }
+
+keyframes slideDown {        from { transform: translateY(-10px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .table-dark {
+        background-color: #111c26;
+        color: #ffffff;
+    }
+
+    .table-bordered td, .table-bordered th {
+        border-color: #2f4f4f;
+    }
+
+    h2 {
+        color: #90caf9;
+        text-shadow: 1px 1px 5px #42a5f5;
+    }
+
+    .card-glow {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    .btn-primary {
+        background: #00bcd4;
+        border: none;
+        color: #fff;
+        box-shadow: 0 0 10px #00e5ff;
+    }
+
+    .btn-primary:hover {
+        background: #0097a7;
+    }
+</style>
+
 @if (!string.IsNullOrEmpty(role))
 {
-    <div class="alert @(role == "admin" ? "alert-primary" : "alert-success") text-center fw-semibold shadow-sm">
-        Je i loguar si <strong>@(role == "admin" ? "Admin" : "User")</strong> – mirësevjen në panelin e @(role == "admin" ? "administratorit" : "rezervimeve").
-    </div>
+<div class="alert @(role == "admin" ? "alert-primary" : "alert-success") text-center fw-semibold shadow-sm alert-role">
+    Je i loguar si <strong>@(role == "admin" ? "Administrator" : "Përdorues")</strong> – mirësevjen në panelin e @(role == "admin" ? "administratorit" : "rezervimeve").
+</div>
 }
 
 @if (role == "admin")
 {
-    <p class="text-end mb-3">
-        <a asp-action="Create" class="btn btn-primary">➕ Shto Udhëtim</a>
-    </p>
+<p class="text-end mb-3 fade-in">
+    <a asp-action="Create" class="btn btn-primary px-4 py-2">➕ Shto Udhëtim</a>
+</p>
 }
 
-
-<h2 class="text-center mb-4">Lista e Udhëtimeve</h2>
+<h2 class="text-center mb-4 fade-in">🌐 Lista e Udhëtimeve</h2>
 
 @if (TempData["Success"] != null)
 {
-    <div class="alert alert-success text-center">
-        @TempData["Success"]
-    </div>
-}
-
-@if (role == "Admin")
-{
-    <p class="text-end mb-3">
-        <a asp-action="Create" class="btn btn-primary">➕ Shto Udhëtim</a>
-    </p>
+<div class="alert alert-success text-center fade-in">
+    @TempData["Success"]
+</div>
 }
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info text-center">Nuk ka ende udhëtime të regjistruara.</div>
+<div class="alert alert-info text-center fade-in">Nuk ka ende udhëtime të regjistruara.</div>
 }
 else
 {
-    <table class="table table-bordered table-striped shadow-sm">
-        <thead class="table-dark text-center">
-            <tr>
-                <th>Destinacioni</th>
-                <th>Çmimi (€)</th>
-                <th>Data Nisjes</th>
-                <th>Veprime</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var trip in Model)
+<table class="table table-bordered table-striped shadow fade-in card-glow">
+    <thead class="table-dark text-center">
+    <tr>
+        <th>Destinacioni</th>
+        <th>Çmimi (€)</th>
+        <th>Data Nisjes</th>
+        <th>Veprime</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var trip in Model)
+    {
+    <tr class="text-center align-middle">
+        <td>@trip.Destination</td>
+        <td>@trip.Price.ToString("F2")</td>
+        <td>@trip.StartDate.ToShortDateString()</td>
+        <td>
+            <a asp-action="Details" asp-route-id="@trip.Id" class="btn btn-outline-info btn-sm me-1" title="Detaje">ℹ️</a>
+
+            @if (role == "admin")
             {
-                <tr class="text-center align-middle">
-                    <td>@trip.Destination</td>
-                    <td>@trip.Price.ToString("F2")</td>
-                    <td>@trip.StartDate.ToShortDateString()</td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@trip.Id" class="btn btn-outline-info btn-sm me-1">Detaje</a>
-
-                        @if (role == "admin")
-                        {
-                            <a asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-outline-warning btn-sm me-1">Ndrysho</a>
-                            <a asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-outline-danger btn-sm me-1">Fshi</a>
-                        }
-
-                        @if (role == "user")
-                        {
-                            <a asp-controller="Reservation" asp-action="Create" asp-route-tripId="@trip.Id" class="btn btn-outline-success btn-sm">Rezervo</a>
-                        }
-
-                    </td>
-                </tr>
+            <a asp-action="Edit" asp-route-id="@trip.Id" class="btn btn-outline-warning btn-sm me-1" title="Ndrysho">✏️</a>
+            <a asp-action="Delete" asp-route-id="@trip.Id" class="btn btn-outline-danger btn-sm me-1" title="Fshi">🗑️</a>
             }
-        </tbody>
-    </table>
+
+            @if (role == "user")
+            {
+            <a asp-controller="Reservation" asp-action="Create" asp-route-tripId="@trip.Id" class="btn btn-outline-success btn-sm" title="Rezervo">✅</a>
+            }
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
 }

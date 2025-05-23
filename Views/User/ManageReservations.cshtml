@@ -1,0 +1,50 @@
+@model IEnumerable<TravelReservationSystem.Models.Reservation>
+@{
+    ViewData["Title"] = "Menaxho Rezervimet";
+}
+
+<h2 class="text-center mb-4">Rezervimet në Pritje</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center">Nuk ka rezervime në pritje për momentin.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="table-dark text-center">
+        <tr>
+            <th>Destinacioni</th>
+            <th>Data e Nisjes</th>
+            <th>Përdoruesi</th>
+            <th>Data e Rezervimit</th>
+            <th>Statusi</th>
+            <th>Veprime</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr class="text-center">
+                <td>@r.Trip.Destination</td>
+                <td>@r.Trip.StartDate.ToShortDateString()</td>
+                <td>@r.User.FullName</td>
+                <td>@r.ReservationDate.ToShortDateString()</td>
+                <td>@r.Status</td>
+                <td>
+                    <form asp-action="UpdateReservationStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@r.Id" />
+                        <input type="hidden" name="status" value="Confirmed" />
+                        <button type="submit" class="btn btn-success btn-sm">✅ Aprovo</button>
+                    </form>
+                    <form asp-action="UpdateReservationStatus" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@r.Id" />
+                        <input type="hidden" name="status" value="Refused" />
+                        <button type="submit" class="btn btn-danger btn-sm">❌ Refuzo</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

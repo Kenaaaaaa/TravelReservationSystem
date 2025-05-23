@@ -1,14 +1,54 @@
 @{
-    ViewData["Title"] = "Paneli Admin";
+ViewData["Title"] = "Paneli Admin";
 }
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Paneli i Administratorit</h2>
+<style>
+    body {
+        margin: 0;
+        overflow-x: hidden;
+    }
+
+    #stars-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: black;
+        overflow: hidden;
+    }
+
+    .admin-title {
+        animation: fadeInDown 1s ease;
+        color: #ffffff;
+        text-shadow: 0 0 8px #00ffff;
+    }
+
+    .admin-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+    }
+
+    .admin-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 10px 30px rgba(0, 255, 255, 0.3);
+    }
+
+ keyframes fadeInDown {        0% { opacity: 0; transform: translateY(-30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<canvas id="stars-bg"></canvas>
+
+<div class="container mt-5 position-relative">
+    <h2 class="text-center mb-4 admin-title">🌌 Paneli i Administratorit</h2>
 
     <div class="row g-4">
-        <!-- Menaxho Udhëtimet -->
         <div class="col-md-4">
-            <div class="card border-primary shadow-sm h-100">
+            <div class="card border-primary shadow-sm h-100 admin-card">
                 <div class="card-body text-center">
                     <h5 class="card-title">📋 Lista e Udhëtimeve</h5>
                     <p class="card-text">Shiko, shto ose modifiko udhëtime ekzistuese.</p>
@@ -17,20 +57,18 @@
             </div>
         </div>
 
-        <!-- Shto Udhëtim -->
         <div class="col-md-4">
-            <div class="card border-success shadow-sm h-100">
+            <div class="card border-success shadow-sm h-100 admin-card">
                 <div class="card-body text-center">
                     <h5 class="card-title">➕ Shto Udhëtim</h5>
-                    <p class="card-text">Krijo një udhëtim të ri për përdoresit.</p>
+                    <p class="card-text">Krijo një udhëtim të ri për përdoruesit.</p>
                     <a asp-controller="Trip" asp-action="Create" class="btn btn-outline-success">Krijo Udhëtim</a>
                 </div>
             </div>
         </div>
 
-        <!-- Menaxho Rezervimet -->
         <div class="col-md-4">
-            <div class="card border-warning shadow-sm h-100">
+            <div class="card border-warning shadow-sm h-100 admin-card">
                 <div class="card-body text-center">
                     <h5 class="card-title">🕓 Rezervimet në Pritje</h5>
                     <p class="card-text">Shiko dhe aprovo ose refuzo rezervimet në pritje.</p>
@@ -40,3 +78,44 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script>
+    const canvas = document.getElementById("stars-bg");
+    const ctx = canvas.getContext("2d");
+    let stars = [];
+
+    function initStars() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        stars = Array.from({ length: 150 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.5,
+            dx: (Math.random() - 0.5) * 0.5,
+            dy: (Math.random() - 0.5) * 0.5
+        }));
+    }
+
+    function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let star of stars) {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+            ctx.fillStyle = "#00ffff";
+            ctx.fill();
+
+            star.x += star.dx;
+            star.y += star.dy;
+
+            if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+            if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+        }
+        requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener("resize", initStars);
+    initStars();
+    animateStars();
+</script>
+}
