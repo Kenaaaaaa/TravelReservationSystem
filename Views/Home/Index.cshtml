@@ -1,19 +1,85 @@
 ﻿@{
     ViewData["Title"] = "Brikena Travel Agency";
 }
+<style>
+    body {
+        background: #f0f9ff;
+        margin: 0;
+        overflow-x: hidden;
+    }
 
-<!-- Carousel full screen -->
-<div id="destinationCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
+    /* ✨ Aeroplani */
+    .plane {
+        position: fixed;
+        top: 10%;
+        left: -10%;
+        width: 100px;
+        z-index: 10;
+        animation: flyPlane 25s linear infinite;
+        opacity: 0.9;
+    }
+
+    keyframes flyPlane {        0% { transform: translateX(0) rotate(0deg); }
+        100% { transform: translateX(130vw) rotate(5deg); }
+    }
+
+    /* 🌊 Valët e detit */
+    .wave {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 200%;
+        height: 100px;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 120 28' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 Q 30 28 60 0 T 120 0 V 28 H 0 Z' fill='%23ffffff'/%3E%3C/svg%3E") repeat-x;
+        animation: waveMove 20s linear infinite;
+        z-index: 2;
+        opacity: 0.6;
+    }
+
+    .wave2 {
+        top: -5px;
+        animation-duration: 30s;
+        opacity: 0.4;
+    }
+
+    keyframes waveMove {        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    /* Tekst + buttons */
+    .carousel-caption-box {
+        backdrop-filter: blur(8px);
+        background-color: rgba(255, 255, 255, 0.4);
+        border-radius: 12px;
+        padding: 20px 30px;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+keyframes fadeIn {        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<!-- ✈️ Aeroplani -->
+<img src="~/images/plane.png" class="plane" alt="Aeroplani" />
+
+<!-- 🌊 Valët -->
+<div class="wave"></div>
+<div class="wave wave2"></div>
+
+<!-- 🖼 Carousel -->
+<div id="destinationCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2500">    <div class="carousel-inner">
         <!-- Slide 1 -->
         <div class="carousel-item active position-relative">
             <img src="~/images/thailand.jpg" class="d-block w-100 vh-100 object-fit-cover" alt="Thailand">
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-25 text-center">
-                <h1 class="display-3 fw-bold text-white">Brikena Travel Agency</h1>
-                <p class="lead text-light mb-4">Eksploro Tajlandën – tempuj, natyrë, aventura</p>
-                <div class="d-flex gap-3">
-                    <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-light fw-bold px-5">Krijo Llogari</a>
-                    <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                <div class="carousel-caption-box">
+                    <h1 class="display-3 fw-bold text-dark">Brikena Travel Agency</h1>
+                    <p class="lead text-dark mb-4">Eksploro Tajlandën – tempuj, natyrë, aventura</p>
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-dark fw-bold px-5">Krijo Llogari</a>
+                        <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,12 +87,14 @@
         <!-- Slide 2 -->
         <div class="carousel-item position-relative">
             <img src="~/images/borabora.jpeg" class="d-block w-100 vh-100 object-fit-cover" alt="Bora Bora">
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-25 text-center">
-                <h1 class="display-3 fw-bold text-white">Bora Bora</h1>
-                <p class="lead text-light mb-4">Pushime luksoze mbi detin kristal</p>
-                <div class="d-flex gap-3">
-                    <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-light fw-bold px-5">Krijo Llogari</a>
-                    <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                <div class="carousel-caption-box">
+                    <h1 class="display-3 fw-bold text-dark">Bora Bora</h1>
+                    <p class="lead text-dark mb-4">Pushime luksoze mbi detin kristal</p>
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-dark fw-bold px-5">Krijo Llogari</a>
+                        <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,24 +102,26 @@
         <!-- Slide 3 -->
         <div class="carousel-item position-relative">
             <img src="~/images/santorini.jpeg" class="d-block w-100 vh-100 object-fit-cover" alt="Santorini">
-            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center bg-dark bg-opacity-25 text-center">
-                <h1 class="display-3 fw-bold text-white">Santorini</h1>
-                <p class="lead text-light mb-4">Perëndime të paharrueshme në Egje</p>
-                <div class="d-flex gap-3">
-                    <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-light fw-bold px-5">Krijo Llogari</a>
-                    <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                <div class="carousel-caption-box">
+                    <h1 class="display-3 fw-bold text-dark">Santorini</h1>
+                    <p class="lead text-dark mb-4">Perëndime të paharrueshme në Egje</p>
+                    <div class="d-flex gap-3 justify-content-center">
+                        <a asp-controller="User" asp-action="Register" class="btn btn-lg btn-outline-dark fw-bold px-5">Krijo Llogari</a>
+                        <a asp-controller="User" asp-action="Login" class="btn btn-lg btn-warning fw-bold px-5">Hyr</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Carousel buttons -->
+    <!-- Butonët e carousel -->
     <button class="carousel-control-prev" type="button" data-bs-target="#destinationCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="carousel-control-prev-icon"></span>
         <span class="visually-hidden">Para</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#destinationCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="carousel-control-next-icon"></span>
         <span class="visually-hidden">Pas</span>
     </button>
 </div>

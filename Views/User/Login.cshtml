@@ -4,19 +4,53 @@ ViewData["Title"] = "Hyrje";
 
 <style>
     body {
-        background: linear-gradient(to right, #b3e5fc, #ffffff);
-        animation: fadeIn 1.2s ease-in-out;
+        background: linear-gradient(135deg, #c3ecf5, #fefefe);
         min-height: 100vh;
+        overflow-x: hidden;
+        animation: fadeIn 1s ease-in-out;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .login-card {
-        animation: slideUp 0.6s ease;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        animation: slideUp 0.8s ease;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        background-color: #ffffffee;
+    }
+
+    .card-header {
+        background: linear-gradient(to right, #2196f3, #00bcd4);
+        color: white;
+        padding: 1.2rem;
+    }
+
+    .form-control:focus {
+        border-color: #00bcd4;
+        box-shadow: 0 0 0 0.25rem rgba(0, 188, 212, 0.25);
+    }
+
+    .btn-primary {
+        background-color: #2196f3;
+        border: none;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-primary:hover {
+        background-color: #0d8ae5;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
     }
 
     keyframes slideUp {        from {
-            transform: translateY(40px);
+            transform: translateY(50px);
             opacity: 0;
         }
         to {
@@ -25,59 +59,39 @@ ViewData["Title"] = "Hyrje";
         }
     }
 
-    keyframes fadeIn {        from { opacity: 0; }
+keyframes fadeIn {        from { opacity: 0; }
         to { opacity: 1; }
-    }
-
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border: none;
-    }
-
-    .card-header {
-        background: #007bff;
-        color: white;
     }
 </style>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card login-card shadow">
+        <div class="col-md-6 col-lg-5">
+            <div class="card login-card">
                 <div class="card-header text-center">
-                    <h3 class="fw-bold mb-0">Hyrje në Sistem</h3>
+                    <h3 class="fw-bold mb-0">Hyr në Brikena Travel</h3>
                 </div>
 
-                <div class="card-body bg-light p-4">
+                <div class="card-body p-4">
+                    @if (ViewBag.Error != null)
+                    {
+                    <div class="alert alert-danger text-center">@ViewBag.Error</div>
+                    }
+
                     <form asp-action="Login" method="post">
                         <div class="mb-3">
-                            <label class="form-label">Email</label>
-                            <input name="email" type="email" class="form-control" required />
+                            <label class="form-label">📧 Email</label>
+                            <input name="email" type="email" class="form-control" placeholder="shkruaj email-in..." required />
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label">Fjalëkalimi</label>
-                            <input name="password" type="password" class="form-control" required />
+                            <label class="form-label">🔐 Fjalëkalimi</label>
+                            <input name="password" type="password" class="form-control" placeholder="fjalëkalimi..." required />
                         </div>
 
-                        @if (ViewBag.Error != null)
-                        {
-                        <div class="alert alert-danger">@ViewBag.Error</div>
-                        }
-
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg">Hyr</button>
-                            <a asp-controller="User" asp-action="Register" class="btn btn-secondary btn-lg">Regjistrohu</a>
+                            <button type="submit" class="btn btn-primary btn-lg">🚀 Hyr</button>
+                            <a asp-controller="User" asp-action="Register" class="btn btn-secondary btn-lg">📝 Regjistrohu</a>
                         </div>
                     </form>
                 </div>

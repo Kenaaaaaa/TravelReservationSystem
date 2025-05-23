@@ -1,6 +1,106 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<style>
+    body {
+        background: linear-gradient(to right, #f9fbfd, #eef6fa);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .privacy-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        animation: fadeInUp 1s ease;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    h4 {
+        margin-top: 30px;
+        color: #333;
+    }
+
+    ul {
+        list-style-type: square;
+        padding-left: 20px;
+    }
+
+    li {
+        margin-bottom: 8px;
+    }
+
+    p, li {
+        font-size: 1.05rem;
+        color: #555;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    keyframes fadeInUp {        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<div class="privacy-container">
+    <h1 class="text-center mb-4">Privacy Policy</h1>
+
+    <p>
+        At <strong>Brikena Travel Agency</strong>, we value your trust and are committed to protecting your privacy. This policy outlines how we collect, handle, and safeguard your data when you visit our website or use our services.
+    </p>
+
+    <h4>1. Information We Collect</h4>
+    <ul>
+        <li>Your name, email address, and contact details during registration or booking</li>
+        <li>Your travel preferences and selected destinations</li>
+        <li>Technical data such as IP address and browser information</li>
+    </ul>
+
+    <h4>2. How We Use Your Data</h4>
+    <ul>
+        <li>To manage reservations and provide personalized travel services</li>
+        <li>To improve our website and enhance user experience</li>
+        <li>To send you updates, offers, or travel tips (only with your consent)</li>
+    </ul>
+
+    <h4>3. Data Protection</h4>
+    <p>
+        We implement strict security protocols and encryption to protect your data against unauthorized access or misuse.
+    </p>
+
+    <h4>4. Sharing of Data</h4>
+    <p>
+        Your personal data is never sold. It is only shared when legally required or necessary for booking fulfillment.
+    </p>
+
+    <h4>5. Your Rights</h4>
+    <p>
+        You have the right to view, update, or delete your personal information at any time. You can also opt out of marketing communications.
+    </p>
+
+    <h4>6. Contact</h4>
+    <p>
+        If you have questions or concerns regarding your privacy, please contact us at <a href="mailto:info@brikenatravel.com">info@brikenatravel.com</a>.
+    </p>
+</div>

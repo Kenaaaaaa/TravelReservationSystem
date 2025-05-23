@@ -40,3 +40,17 @@ body {
   object-fit: contain;
   max-height: 50px;
 }
+nav.navbar, .carousel-caption-box, .btn {
+  position: relative;
+  z-index: 1000;
+}
+
+.wave,
+.wave2,
+.plane {
+  z-index: 0 !important;
+}
+
+.carousel-item img {
+  z-index: 1;
+}
