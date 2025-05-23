@@ -18,15 +18,12 @@ namespace TravelReservationSystem.Controllers
             _context = context;
         }
 
-        // GET: /Reservation/MyReservations
+        // ✅ GET: /Reservation/MyReservations
         public IActionResult MyReservations()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
-
             if (userId == null)
-            {
                 return RedirectToAction("Login", "User");
-            }
 
             var reservations = _context.Reservations
                 .Include(r => r.Trip)
@@ -36,21 +33,16 @@ namespace TravelReservationSystem.Controllers
             return View(reservations);
         }
 
-        // GET: /Reservation/Create?tripId=1
+        // ✅ GET: /Reservation/Create?tripId=1
         public async Task<IActionResult> Create(int tripId)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
-
             if (userId == null)
-            {
                 return RedirectToAction("Login", "User");
-            }
 
             var trip = await _context.Trips.FindAsync(tripId);
             if (trip == null)
-            {
                 return NotFound();
-            }
 
             var reservation = new Reservation
             {
@@ -65,6 +57,45 @@ namespace TravelReservationSystem.Controllers
 
             TempData["Success"] = "Rezervimi u krye me sukses!";
             return RedirectToAction("MyReservations");
+        }
+
+        // ✅ GET: /Reservation/Pending
+        public async Task<IActionResult> Pending()
+        {
+            var role = HttpContext.Session.GetString("Role");
+            if (string.IsNullOrEmpty(role) || !role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Login", "User");
+
+            var pendingReservations = await _context.Reservations
+                .Include(r => r.Trip)
+                .Include(r => r.User)
+                .Where(r => r.Status == "Pending")
+                .ToListAsync();
+
+            return View(pendingReservations);
+        }
+
+        // ✅ POST: /Reservation/UpdateStatus
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdateStatus(int id, string status)
+        {
+            var role = HttpContext.Session.GetString("Role");
+            if (string.IsNullOrEmpty(role) || !role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Login", "User");
+
+            var reservation = await _context.Reservations.FindAsync(id);
+            if (reservation == null)
+                return NotFound();
+
+            if (status != "Accepted" && status != "Refused")
+                return BadRequest("Status i pavlefshëm");
+
+            reservation.Status = status;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = $"Rezervimi u {status.ToLower()} me sukses.";
+            return RedirectToAction("Pending");
         }
     }
 }
