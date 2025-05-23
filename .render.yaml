@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: TravelReservationSystem
+    env: dotnet
+    buildCommand: dotnet publish -c Release -o out
+    startCommand: dotnet out/TravelReservationSystem.dll
+    plan: free
